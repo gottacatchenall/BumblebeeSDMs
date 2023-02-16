@@ -70,8 +70,6 @@ function make_sdms()
             ],
         )
 
-        # TODO REMOVE
-        break
     end
 
     @info "end of fit"
@@ -106,7 +104,6 @@ function make_sdms()
                         (Symbol("SSP"), ssp)
                     ],
                 )
-                return 
             end 
         end 
     end
