@@ -85,7 +85,7 @@ function make_sdms()
 
                 sdm, uncert = predict_sdm(theselayers, models[sp], I)
 
-                ypath = string(a.first.value,"-",a.second.value)
+                ypath = string(y.first.value,"-",y.second.value)
 
                 dir_path = joinpath(datadir(), "SDMs", sp, ypath, ssp)
                 run(`mkdir -p $(joinpath(datadir(), "SDMs", sp, ypath))`)
