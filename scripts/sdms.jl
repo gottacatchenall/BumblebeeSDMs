@@ -85,12 +85,14 @@ function make_sdms()
 
                 sdm, uncert = predict_sdm(theselayers, models[sp], I)
 
-                dir_path = joinpath(datadir(), "SDMs", sp, y, ssp)
-                run(`mkdir -p $(joinpath(datadir(), "SDMs", sp, y))`)
-                run(`mkdir -p $(joinpath(datadir(), "SDMs", sp, y, ssp))`)
+                ypath = string(a.first.value,"-",a.second.value)
+
+                dir_path = joinpath(datadir(), "SDMs", sp, ypath, ssp)
+                run(`mkdir -p $(joinpath(datadir(), "SDMs", sp, ypath))`)
+                run(`mkdir -p $(joinpath(datadir(), "SDMs", sp, ypath, ssp))`)
                 
-                sdm_path = joinpath(datadir(), "SDMs", sp, y, ssp, "sdm.tif")
-                uncert_path = joinpath(datadir(), "SDMs", sp, y, ssp, "uncertainty.tif")
+                sdm_path = joinpath(datadir(), "SDMs", sp, ypath, ssp, "sdm.tif")
+                uncert_path = joinpath(datadir(), "SDMs", sp, ypath, ssp, "uncertainty.tif")
 
                 _write_geotiff(sdm_path, sdm)
                 _write_geotiff(uncert_path, uncert)
