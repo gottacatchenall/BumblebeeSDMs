@@ -648,3 +648,10 @@ function _write_geotiff(
 ) where {T <: Number}
     return _write_geotiff(file, convert.(SimpleSDMPredictor, layers); kwargs...)
 end
+
+
+
+
+
+
+make_sdms()
