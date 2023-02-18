@@ -26,7 +26,7 @@ const years = [Year(2011)=>Year(2040), Year(2041)=>Year(2070), Year(2071)=>Year(
 
 
 function make_sdms()
-    run(`mkdir -p $(joinpath("scratch", "mcatchen", "SDMs"))`)
+    run(`mkdir -p $(joinpath("/scratch", "mcatchen", "SDMs"))`)
     bees, plants = get_bee_species(), get_plant_species()
     species = vcat(convert.(Vector{String},([bees,plants]))...)
 
@@ -42,7 +42,7 @@ function make_sdms()
     progbar = ProgressMeter.Progress(length(species))    
     @info "Fitting SDMs..."
     for sp in species
-        run(`mkdir -p $(joinpath("scratch", "mcatchen", "SDMs", sp))`)
+        run(`mkdir -p $(joinpath("/scratch", "mcatchen", "SDMs", sp))`)
 
         occ = convert_occurrence_to_tif(sp, current_decorrelated_layers[begin])
         pres,absen = get_pres_and_abs(occ)    
@@ -53,15 +53,15 @@ function make_sdms()
 
         models[sp] = model
 
-        run(`mkdir -p $(joinpath("scratch", "mcatchen", "SDMs", sp, "current"))`)
+        run(`mkdir -p $(joinpath("/scratch", "mcatchen", "SDMs", sp, "current"))`)
 
-        _write_geotiff(joinpath("scratch", "mcatchen", "SDMs", sp, "current", "sdm.tif"), sdm)
-        _write_geotiff(joinpath("scratch", "mcatchen", "SDMs", sp, "current", "uncertainty.tif"), uncert)
+        _write_geotiff(joinpath("/scratch", "mcatchen", "SDMs", sp, "current", "sdm.tif"), sdm)
+        _write_geotiff(joinpath("/scratch", "mcatchen", "SDMs", sp, "current", "uncertainty.tif"), uncert)
 
 
 
         dict, τ = compute_fit_stats_and_cutoff(sdm, xy, y)
-        write_stats(dict, joinpath("scratch", "mcatchen", "SDMs", sp, "current", "fit.json"))
+        write_stats(dict, joinpath("/scratch", "mcatchen", "SDMs", sp, "current", "fit.json"))
 
         ProgressMeter.next!(
             progbar;
@@ -86,11 +86,11 @@ function make_sdms()
                 ypath = string(y.first.value,"-",y.second.value)
                 ssppath = string(ssp)
 
-                run(`mkdir -p $(joinpath("scratch", "mcatchen", "SDMs", sp, ypath))`)
-                run(`mkdir -p $(joinpath("scratch", "mcatchen", "SDMs", sp, ypath, ssppath))`)
+                run(`mkdir -p $(joinpath("/scratch", "mcatchen", "SDMs", sp, ypath))`)
+                run(`mkdir -p $(joinpath("/scratch", "mcatchen", "SDMs", sp, ypath, ssppath))`)
                 
-                sdm_path = joinpath("scratch", "mcatchen", "SDMs", sp, ypath, ssppath, "sdm.tif")
-                uncert_path = joinpath("scratch", "mcatchen", "SDMs", sp, ypath, ssppath, "uncertainty.tif")
+                sdm_path = joinpath("/scratch", "mcatchen", "SDMs", sp, ypath, ssppath, "sdm.tif")
+                uncert_path = joinpath("/scratch", "mcatchen", "SDMs", sp, ypath, ssppath, "uncertainty.tif")
 
                 _write_geotiff(sdm_path, sdm)
                 _write_geotiff(uncert_path, uncert)
